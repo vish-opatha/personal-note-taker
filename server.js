@@ -1,6 +1,7 @@
 // Importing the required modules
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const uuid = require('./utils/uuid.js');
 const data = require ('./db/db.json');
 
@@ -27,6 +28,63 @@ app.get('/notes', (req, res) => {
 app.get('/api/notes', (req, res) => {
     res.json(data);
 });
+
+// API post route for /api/notes
+app.post('/api/notes', (req, res) => {
+  // Log that a POST request was received
+  // console.info(`${req.method} request received to add a review`);
+
+  // Destructuring details in the request body
+  const { title, text } = req.body;
+
+  if (title && text ) 
+  {
+    // Variable for the object we will save
+    const newNote = {
+      title,
+      text,
+      note_id: uuid(),
+    };
+
+    fs.readFile('./db/reviews.json', 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        // Convert string into JSON object
+        const parsedReviews = JSON.parse(data);
+
+        // Add a new review
+        parsedReviews.push(newReview);
+
+        // Write updated reviews back to the file
+        fs.writeFile(
+          './db/reviews.json',
+          JSON.stringify(parsedReviews, null, 4),
+          (writeErr) =>
+            writeErr
+              ? console.error(writeErr)
+              : console.info('Successfully updated reviews!')
+        );
+      }
+    });
+
+    const response = {
+      status: 'success',
+      body: newReview,
+    };
+
+    console.log(response);
+    res.json(response);
+  } else {
+    res.json('Error in posting review');
+  }
+});
+
+
+
+
+
+  //################################################3
 
 // Wild card route
 app.get('*', (req, res) => {
