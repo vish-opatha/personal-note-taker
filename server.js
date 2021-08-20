@@ -46,31 +46,31 @@ app.post('/api/notes', (req, res) => {
       note_id: uuid(),
     };
 
-    fs.readFile('./db/reviews.json', 'utf8', (err, data) => {
+    fs.readFile('./db/db.json', 'utf8', (err, notesData) => {
       if (err) {
         console.error(err);
       } else {
         // Convert string into JSON object
-        const parsedReviews = JSON.parse(data);
+        const existingNotes = JSON.parse(notesData);
 
         // Add a new review
-        parsedReviews.push(newReview);
+        existingNotes.push(newNote);
 
         // Write updated reviews back to the file
         fs.writeFile(
-          './db/reviews.json',
-          JSON.stringify(parsedReviews, null, 4),
+          './db/db.json',
+          JSON.stringify(existingNotes, null, 4),
           (writeErr) =>
             writeErr
               ? console.error(writeErr)
-              : console.info('Successfully updated reviews!')
+              : console.info('Your new note is saved!')
         );
       }
     });
 
     const response = {
       status: 'success',
-      body: newReview,
+      body: newNote,
     };
 
     console.log(response);
