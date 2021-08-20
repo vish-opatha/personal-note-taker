@@ -1,6 +1,7 @@
 // Importing the required modules
 const express = require('express');
 const path = require('path');
+const uuid = require('./utils/uuid.js');
 const data = require ('./db/db.json');
 
 // Defining variables 
@@ -17,13 +18,14 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
+// API get route for /api/notes
 app.get('/api/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/notes.html'));
+    res.json(data);
 });
 
 // Wild card route
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 
