@@ -13,6 +13,11 @@ app.use(express.json());
 app.use(express.urlencoded({extended :true}));
 app.use(express.static('public'));
 
+// Route for the root folder
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
 // Route using get for /notes
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
