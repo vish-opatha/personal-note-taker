@@ -10,14 +10,9 @@ const app = express();
 // Define the middleware required
 app.use(express.json());
 app.use(express.urlencoded({extended :true}));
-
-// app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static('public'));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index1.html'));
-  });
-
+// Route using get for /notes
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
@@ -26,7 +21,10 @@ app.get('/api/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
-
+// Wild card route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 
 
