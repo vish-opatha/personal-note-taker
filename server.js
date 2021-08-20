@@ -1,17 +1,32 @@
 // Importing the required modules
 const express = require('express');
+const path = require('path');
+const data = require ('./db/db.json');
 
-const PORT = process.env.PORT || 3000;
+// Defining variables 
+const PORT = process.env.PORT || 3001;
 const app = express();
 
+// Define the middleware required
 app.use(express.json());
 app.use(express.urlencoded({extended :true}));
 
+// app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static('public'));
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public/index1.html'));
   });
+
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'));
+});
+
+app.get('/api/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'));
+});
+
+
 
 
 
