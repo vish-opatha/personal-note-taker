@@ -1,5 +1,4 @@
-// Importing the required modules
-const express = require('express');
+// const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const util = require('util'); // #####################
@@ -16,35 +15,11 @@ app.use(express.urlencoded({extended :true}));
 app.use(express.static('public'));
 
 
-
-// const writeToFile = (destination, content) =>
-//   fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
-//     err ? console.error(err) : console.info(`\nData written to ${destination}`)
-//   );
-
-// const readAndAppend = (content, file) => {
-//   fs.readFile(file, 'utf8', (err, data).then(()) => {
-//     if (err) {
-//       console.error(err);
-//     } else {
-//         const parsedData = JSON.parse(data);
-//         parsedData.push(content);
-//         writeToFile(file, parsedData);
-//       }
-//     });
-//   };
-
-// Route for the root folder
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+  });
 
-// Route using get for /notes
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/notes.html'));
-});
 
-// API get route for /api/notes
 app.get('/api/notes', (req, res) => {
     res.json(data);
 });
