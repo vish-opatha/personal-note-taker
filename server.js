@@ -31,7 +31,6 @@ app.get('/api/notes', (req, res) => {
 
 // API post route for /api/notes
 app.post('/api/notes', (req, res) => {
-  
   // Destructuring details in the request body
   const { title, text } = req.body;
 
