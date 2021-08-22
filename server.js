@@ -60,7 +60,7 @@ app.post('/api/notes', (req, res) => {
     const newNote = {
       title,
       text,
-      note_id: uuid(),
+      id: uuid(),
     };
 
     fs.readFile('./db/db.json', 'utf8', (err, notesData) => {
@@ -98,6 +98,24 @@ app.post('/api/notes', (req, res) => {
 });
   //################################################
 
+
+
+
+
+
+  // let userJSON = require('./users.json');
+
+app.delete('/api/notes/:id', (req, res) => {
+    const data = require ('./db/db.json');
+    let deleteNoteId = req.params.id;
+    let deleteNote = data.find(note => note.id == deleteNoteId);
+    let deleteNoteIndex = data.indexOf(deleteNote);
+
+    let existingNotes = data.splice(deleteNoteIndex,1);
+    console.log(deleteNoteId);
+    console.log(existingNotes);
+
+});
 
 
   //#################################################
