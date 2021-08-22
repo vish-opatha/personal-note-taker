@@ -46,7 +46,9 @@ app.get('/notes', (req, res) => {
 
 // API get route for /api/notes
 app.get('/api/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, '/db/db.json'));
+  fs.readFile(path.join(__dirname, '/db/db.json'),(error, data) => {
+    res.json (JSON.parse(data));
+  });
 });
 
 
