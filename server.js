@@ -2,18 +2,18 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const util = require('util'); // #####################
+// const util = require('util'); // #####################
 const uuid = require('./helper/uuid.js');
 const data = require ('./db/db.json');
-
+const app = express();
 // Defining variables 
 const PORT = process.env.PORT || 3001;
-const app = express();
+
 
 // Define the middleware required
 app.use(express.json());
-app.use(express.urlencoded({extended :true}));
-app.use(express.static('public'));
+// app.use(express.urlencoded({extended :true}));
+app.use(express.static(path.join(__dirname,'public')));
 
 
 
