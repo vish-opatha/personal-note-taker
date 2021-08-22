@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 // const util = require('util'); // #####################
 const uuid = require('./helper/uuid.js');
-const data = require ('./db/db.json');
+//const data = require ('./db/db.json');
 const app = express();
 // Defining variables 
 const PORT = process.env.PORT || 3001;
@@ -46,7 +46,7 @@ app.get('/notes', (req, res) => {
 
 // API get route for /api/notes
 app.get('/api/notes', (req, res) => {
-    res.json(data);
+  res.sendFile(path.join(__dirname, '/db/db.json'));
 });
 
 
