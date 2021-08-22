@@ -18,13 +18,36 @@ fs.readFile('./db/db.json', 'utf8', (err, notesData) => {
       } else{
           console.log(`x!=y`);
           let deleteId = "7b4b";
-          let deleteNote = existingData.find(note => note.note_id ===deleteId);
+          let deleteNote = existingData.find(note => note.id == deleteId);
+
+          console.log(` delete note ${deleteNote}`);
+
           let deleteIndex = existingData.indexOf(deleteNote);
+          console.log(` delete note ${deleteIndex}`);
           existingData.splice(deleteIndex,1);
 
-          for (let index = 0; index < existingData.length; index++) {
-            console.log(existingData[index].note_id);      
-          }
+          console.log(`================================
+          ${existingData}`);
+            var i=1;
+          existingData.forEach(a => {
+              
+              console.log(`${i} ${a.title} ${a.text}`);
+              i++;
+              
+          });
+
+          fs.writeFile(
+            './db/db.json',
+            JSON.stringify(existingData, null, 4),
+            (writeErr) =>
+              writeErr
+                ? console.error(writeErr)
+                : console.info('Your new note is saved!')
+          );
+
+        //   for (let index = 0; index < existingData.length; index++) {
+        //     console.log(existingData[index].id);      
+        //   }
 
       }
           

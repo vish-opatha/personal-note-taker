@@ -109,11 +109,21 @@ app.delete('/api/notes/:id', (req, res) => {
     const data = require ('./db/db.json');
     let deleteNoteId = req.params.id;
     let deleteNote = data.find(note => note.id == deleteNoteId);
-    let deleteNoteIndex = data.indexOf(deleteNote);
 
-    let existingNotes = data.splice(deleteNoteIndex,1);
-    console.log(deleteNoteId);
-    console.log(existingNotes);
+    data.splice(data.indexOf(deleteNote),1);
+
+    fs.writeFile( './db/db.json',
+      JSON.stringify(data, null, 4),
+      (writeErr) =>
+        writeErr
+          ? console.error(writeErr)
+          : res.json("success")
+    );
+
+    
+   
+    
+
 
 });
 
