@@ -1,65 +1,123 @@
+// Importing the required modules
+const express = require('express');
+const path = require('path');
 const fs = require('fs');
-fs.readFile('./db/db.json', 'utf8', (err, notesData) => {
-    if (err) 
-    {
-      console.error(err);
-    } 
-    
-    else {
-      console.log("Reading file");
-    //   console.log(notesData);
 
-      let existingData = JSON.parse(notesData);
+const uuid = require('./helper/uuid.js');
+const app = express();
+const PORT = process.env.PORT || 3001;
 
-      var x=5; var y=6;
-      if(x==y)
+// Define the middleware required
+app.use(express.json());
+app.use(express.static(path.join(__dirname,'public')));
+
+// Route for the root folder
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+// Route for /notes
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'));
+});
+
+// API get route for /api/notes
+app.get('/api/notes', (req, res) => {
+    fs.readFile(path.join(__dirname, '/db/db.json'),(error, data) => {
+    res.json (JSON.parse(data));
+  });
+});
+
+// API post route for /api/notes.
+// This is used to add new notes to db.json file.
+app.post('/api/notes', (req, res) => 
+{
+  const { title, text } = req.body;
+
+  if (title && text) 
+  {
+      const newNote = { title, text, id: uuid(),};
+
+      // Reading the db.json file
+      fs.readFile('./db/db.json', 'utf8', (err, notesData) => 
       {
-          console.log(`x=y`);
-      } else{
-          console.log(`x!=y`);
-          let deleteId = "7b4b";
-          let deleteNote = existingData.find(note => note.id == deleteId);
+        if (err) { console.error(err); } 
+        
+        else 
+        {
+        // Convert string into JSON object
+        const existingNotes = JSON.parse(notesData);
 
-          console.log(` delete note ${deleteNote}`);
+        // Add a new review
+        existingNotes.push(newNote);
 
-          let deleteIndex = existingData.indexOf(deleteNote);
-          console.log(` delete note ${deleteIndex}`);
-          existingData.splice(deleteIndex,1);
+        // Write new notes to the db.json file
+        fs.writeFile('./db/db.json', JSON.stringify(existingNotes, null, 4),
+          (writeErr) =>
+            writeErr
+            ? console.error(writeErr)
+            : console.log("Written to the db"));
+        }
+    });
+  
+    const response = {
+      status: 'success',
+      body: newNote,
+    };
 
-          console.log(`================================
-          ${existingData}`);
-            var i=1;
-          existingData.forEach(a => {
-              
-              console.log(`${i} ${a.title} ${a.text}`);
-              i++;
-              
-          });
+    console.log(response);
+    res.json(response);
+  } 
+  
+  else {
+    res.json('Error in posting review');
+  }
+});
+  //################################################
 
-          fs.writeFile(
-            './db/db.json',
-            JSON.stringify(existingData, null, 4),
-            (writeErr) =>
-              writeErr
-                ? console.error(writeErr)
-                : console.info('Your new note is saved!')
-          );
 
-        //   for (let index = 0; index < existingData.length; index++) {
-        //     console.log(existingData[index].id);      
-        //   }
 
-      }
-          
-      console.log(`after reading`);
-    }
+
+
+
+  // let userJSON = require('./users.json');
+
+app.delete('/api/notes/:id', (req, res) => {
+    const data = require ('./db/db.json');
+    let deleteNoteId = req.params.id;
+    let deleteNote = data.find(note => note.id == deleteNoteId);
+
+    data.splice(data.indexOf(deleteNote),1);
+
+    fs.writeFile( './db/db.json',
+      JSON.stringify(data, null, 4),
+      (writeErr) =>
+        writeErr
+          ? console.error(writeErr)
+          : res.json("success")
+    );
+
+    
+   
+    
+
+
 });
 
 
-// app.delete('/users/delete/:id', (req, res) => {
-//     let deleteId = req.params.id; //Get the id through req.params.id of the object you are going to delete
-//     let deleteObj = userJson.find(user => user.id == deleteId); // As you have only Id of the object, we want to get the entire object from the array. find() will fetch the object from the array whose id is equal to deleteId and assign it to deleteObj.
-//     let deleteIndex = userJson.indexOf(deleteObj); //Find the index of the object fetched from the JSON array.
-//     userJson.splice(deleteIndex,1); // Splice/ remove the object from the JSON Array.
-//    res.send(deleteObj); // Send the deleted object as response.
-// });
+  //#################################################
+
+// Wild card route
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+
+
+
+
+
+// The app is listening to the given port and display message
+app.listen(PORT, () =>
+  console.log(`Example app listening at http://localhost:${PORT}`)
+);
