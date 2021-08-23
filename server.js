@@ -69,24 +69,31 @@ app.post('/api/notes', (req, res) =>
 
 // API delete route for /api/notes.
 // This is used to delete a selected note from db.json file.
-app.delete('/api/notes/:id', (req, res) => {
-    const data = require ('./db/db.json');
-    // Getting the note id via client side parameter & find the note from the json file
-    let deleteNoteId = req.params.id;
-    console.log(deleteNoteId);
-    let deleteNote = data.find(note => note.id == deleteNoteId);
+app.delete('/api/notes/:id', (req, res) => 
+{
+    // Reading the db.json file
+    fs.readFile('./db/db.json', "utf8", (err, dataFromFile) => {
+    if (err) {
+        console.log("Error reading file from disk:", err);
+        return;
+    }
 
-    // Remove the item by using the index/positin of the note
-    data.splice(data.indexOf(deleteNote),1);
-    console.log(JSON.stringify(data));
+    else {
+        const data = JSON.parse(dataFromFile);
+        // Getting the note id via client side parameter & find the note from the json file
+        let deleteNoteId = req.params.id;
+        let deleteNote = data.find(note => note.id == deleteNoteId);
 
-    fs.writeFile( './db/db.json',
-      JSON.stringify(data, null, 4),
-      (writeErr) =>
-      writeErr
-      ? console.error(writeErr)
-      : res.json("Your note is deleted.")
-    );
+        // Remove the item by using the index/positin of the note
+        data.splice(data.indexOf(deleteNote),1);
+        fs.writeFile( './db/db.json',
+        JSON.stringify(data, null, 4),
+        (writeErr) =>
+        writeErr
+        ? console.error(writeErr)
+        : res.json("Your note is deleted."));
+    } 
+  });
 });
 
 // Wild card route
