@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 
-const uuid = require('./helper/uuid.js');
+const { v4: uuidv4 } = require('uuid');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -34,7 +34,7 @@ app.post('/api/notes', (req, res) =>
 {
     const { title, text } = req.body;
     if (title && text) {
-        const newNote = { title, text, id: uuid(),};
+        const newNote = { title, text, id: uuidv4(),};
 
         // Reading the db.json file
         fs.readFile('./db/db.json', 'utf8', (err, notesData) => 

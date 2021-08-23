@@ -11,6 +11,7 @@
   * [Installation](#Installation)
   * [Usage](#Usage)
   * [Technical Acceptance Work Done](#Technical-Acceptance-Work-Done)
+  * [Deployement Work Done](#Deployement-Work-Done)
   * [Repository Quality Work Done](#Repository-Quality-Work-Done)
   * [Questions](#Questions)
   
@@ -50,18 +51,22 @@
   If you are hoping to use the online deployed version, please use the link given in the 'Important Links' section.
 
   ## Technical Acceptance Work Done
-  1. The application loads with a landing page whih can directs the user to notes page. To direct the user to the notes page seperate route is used.
+  1. The application loads with a landing page which can directs the user to notes page. To direct the user to the notes page seperate route is used.
   2. When the notes page is loaded, the user can see the existing/saved notes.
   3. When both new note title and text is entered, save button is appeared to save the notes.
   4. After saving a new note, it will appear with the exisitng notes on the page.
   5. Once the user clicks on the note title, the description is presented to the user. If a user needs to enter a new notes, clicking on the write icon provides empty space to write new notes.
   6. When the user clicks on the delete icon, the specific note is deleted from the list.
-  6. Routes are created for /, *, /notes, api/notes(GET/POST/DELETE) 
+  7. Routes are created for /, *, /notes, api/notes(GET/POST/DELETE) 
 
+  ## Deployement Work Done
+  1. Application is deployed at live URL using Heroku.
+  2. Application loads with no erros.
+  3. Github URL and repo are submitted.  
   ## Repository Quality Work Done
-  1. Repository is named as team-profile-generator.
+  1. Repository is named as personal-note-taker.
   2. Tags are indented accordingly and comments are included while following the best practices for naming conventions.
   3. Changes were committed multiple times with messages.
 
   ## Questions
-  If you have any questions about the repo, open an issue or directly contact me at <v.opatha@gmail.com> You can find my other work at [vish-op](https://github.com/vish-op)
+  If you have any questions about the repo, open an issue or directly contact me at <v.opatha@gmail.com> You can find my other work at [Github](https://github.com/vish-op)
