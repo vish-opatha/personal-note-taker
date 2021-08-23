@@ -30,19 +30,21 @@ app.get('/api/notes', (req, res) => {
 
 // API post route for /api/notes.
 // This is used to add new notes to db.json file.
-app.post('/api/notes', (req, res) => {
+app.post('/api/notes', (req, res) => 
+{
   const { title, text } = req.body;
 
-  if (title && text) {
+  if (title && text) 
+  {
       const newNote = { title, text, id: uuid(),};
 
       // Reading the db.json file
-      fs.readFile('./db/db.json', 'utf8', (err, notesData) => {
-        if (err) {
-          console.error(err);
-        } 
+      fs.readFile('./db/db.json', 'utf8', (err, notesData) => 
+      {
+        if (err) { console.error(err); } 
         
-        else {
+        else 
+        {
         // Convert string into JSON object
         const existingNotes = JSON.parse(notesData);
 
@@ -54,22 +56,22 @@ app.post('/api/notes', (req, res) => {
           (writeErr) =>
             writeErr
             ? console.error(writeErr)
-            : res.json("Your note saved successfully!"));
+            : console.log("Written to the db"));
         }
     });
-  }
-  //   const response = {
-  //     status: 'success',
-  //     body: newNote,
-  //   };
-
-  //   console.log(response);
-  //   res.json(response);
-  // } 
   
-  // else {
-  //   res.json('Error in posting review');
-  // }
+    const response = {
+      status: 'success',
+      body: newNote,
+    };
+
+    console.log(response);
+    res.json(response);
+  } 
+  
+  else {
+    res.json('Error in posting review');
+  }
 });
   //################################################
 
