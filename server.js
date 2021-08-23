@@ -34,7 +34,8 @@ app.post('/api/notes', (req, res) =>
 {
     const { title, text } = req.body;
     if (title && text) {
-        const newNote = { title, text, id: uuidv4(),};
+        const newNote = { title, text, id:uuidv4(),};
+        console.log(newNote.id);
 
         // Reading the db.json file
         fs.readFile('./db/db.json', 'utf8', (err, notesData) => 
@@ -72,10 +73,12 @@ app.delete('/api/notes/:id', (req, res) => {
     const data = require ('./db/db.json');
     // Getting the note id via client side parameter & find the note from the json file
     let deleteNoteId = req.params.id;
+    console.log(deleteNoteId);
     let deleteNote = data.find(note => note.id == deleteNoteId);
 
     // Remove the item by using the index/positin of the note
     data.splice(data.indexOf(deleteNote),1);
+    console.log(JSON.stringify(data));
 
     fs.writeFile( './db/db.json',
       JSON.stringify(data, null, 4),

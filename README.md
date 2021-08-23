@@ -19,18 +19,17 @@
   Following are the important links related to this application.
   * [Personal Note Taker - Github Repo](https://github.com/vish-opatha/personal-note-taker)
   * [Personal Note Taker - Heroku Deployed App](https://personal-note-taker-v.herokuapp.com/)
-  * [Walkthrough Video](https://drive.google.com/file/d/1vhYlg1mLTU8D2uR8s-dZn54WPvT2Ks2J/view?usp=sharing)
 
   ## Mock-up
   Following images shows the landing page and notes manupulation page.
 
   *Landing Page*
 
-  ![Landing Page](./images/prompts.JPG)
+  ![Landing Page](./public/assets/readme_images/landing_page.jpg)
 
   *Notes Page*
 
-  ![Notes Page](./images/prompts.JPG)
+  ![Notes Page](./public/assets/readme_images/notes.jpg)
 
   ## Installation
   To install the necessary dependencies, run the following command:
